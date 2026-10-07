@@ -67,7 +67,7 @@ class megatec:
                 stopbits=serial.STOPBITS_ONE,
                 timeout=self.timeout,
             )
-            print("Соединение открыто.")
+            if self.debug: print("Соединение открыто.")
             return True
         except serial.SerialException as e:
             print(f"[{self.port}] Ошибка подключения: {e}")
