@@ -1,0 +1,66 @@
+zabbix_export:
+  version: '7.4'
+  template_groups:
+    - uuid: e960332b3f6c46a1956486d4f3f99fce
+      name: 'Templates/Server hardware'
+  templates:
+    - uuid: 65c3a72493e84ffe8b9f7ba0ec62dfcc
+      template: 'Raspberry Pi 5'
+      name: 'Raspberry Pi 5'
+      groups:
+        - name: 'Templates/Server hardware'
+      items:
+        - uuid: 11b61c283040492488ec098af7e6599b
+          name: rpi.fan.pwm
+          type: ZABBIX_ACTIVE
+          key: rpi.fan.pwm
+          history: 7d
+          units: '%'
+          preprocessing:
+            - type: JAVASCRIPT
+              parameters:
+                - |
+                  var v = parseFloat(value);
+                  return Math.round((v / 250) * 100);
+          tags:
+            - tag: addon
+              value: cpu
+            - tag: component
+              value: cpu
+        - uuid: 56747a94cc5d4b0c8514897aa725ec3b
+          name: rpi.fan.rpm
+          type: ZABBIX_ACTIVE
+          key: rpi.fan.rpm
+          history: 7d
+          units: rpm
+          tags:
+            - tag: addon
+              value: cpu
+            - tag: component
+              value: cpu
+        - uuid: bf1096ab577044b78a26b1bb8a217053
+          name: rpi.temp.cpu
+          type: ZABBIX_ACTIVE
+          key: rpi.temp.cpu
+          history: 7d
+          units: °C
+          preprocessing:
+            - type: MULTIPLIER
+              parameters:
+                - '0.001'
+          tags:
+            - tag: addon
+              value: cpu
+            - tag: component
+              value: cpu
+        - uuid: 8abaa32eca584ab9af25992690312ed4
+          name: rpi.temp.nvme
+          type: ZABBIX_ACTIVE
+          key: rpi.temp.nvme
+          history: 7d
+          units: °C
+          tags:
+            - tag: addon
+              value: cpu
+            - tag: component
+              value: cpu
